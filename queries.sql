@@ -89,3 +89,37 @@ SELECT species, MAX(weight_kg), MIN(weight_kg) FROM animals GROUP BY species;
 
 SELECT species, AVG(escape_attempts) FROM animals WHERE date_of_birth <= '2000-12-31' AND date_of_birth >= '1990-01-01' GROUP BY species;
 
+-- What animals belong to Melody Pond?
+
+SELECT full_name AS owner, name AS animal FROM owners JOIN animals ON owners.id = animals.owner_id WHERE owners.full_name = 'Melody Pond';
+
+-- List of all animals that are pokemon (their type is Pokemon)
+
+SELECT animals.name AS pokemon_type FROM animals JOIN species ON animals.species_id = species.id WHERE species_id = 1;
+
+-- List all owners and their animals, remember to include those that don't own any animal
+
+SELECT name, full_name FROM animals RIGHT JOIN owners ON animals.owner_id = owners.id;
+
+-- How many animals are there per species?
+
+SELECT species.name AS Species, COUNT (animals.name) AS Total_number FROM species JOIN animals ON species.id =  animals.species_id GROUP BY species.name;
+
+-- List all Digimon owned by Jennifer Orwell
+
+SELECT name AS list_of_digimons FROM animals JOIN owners ON animals.owner_id = owners.id WHERE full_name = 'Jennifer Orwell' AND species_id = 2;
+
+-- List all animals owned by Dean Winchester that haven't tried to escape
+
+SELECT name AS AnimalsThatDidnotEscape FROM animals JOIN owners ON animals.owner_id = owners.id WHERE full_name = 'Dean Winchester' AND escape_attempts = 0;
+
+-- Who owns the most animals?
+
+SELECT agg.full_name as owner, count as Total_number FROM (SELECT full_name, count(a.owner_id) FROM owners O JOIN animals A ON O.id = A.owner_id GROUP BY O.full_name) AS agg WHERE count = (SELECT MAX(count) FROM (SELECT full_name, count(a.owner_id) FROM owners O JOIN animals A ON O.id = A.owner_id GROUP BY O.full_name) AS agg);
+
+-- Who owns the most animals?
+
+SELECT owners.full_name as owner, count as Max_numberOfAnimals FROM (SELECT full_name, count(animals.owner_id) 
+FROM owners  JOIN animals  ON owners.id = animals.owner_id GROUP BY owners.full_name) 
+AS owners WHERE count = (SELECT MAX(count) FROM (SELECT full_name, count(animals.owner_id) 
+FROM owners JOIN animals  ON owners.id = animals.owner_id GROUP BY owners.full_name) AS owners);
