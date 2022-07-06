@@ -119,7 +119,15 @@ SELECT agg.full_name as owner, count as Total_number FROM (SELECT full_name, cou
 
 -- Who owns the most animals?
 
-SELECT owners.full_name as owner, count as Max_numberOfAnimals FROM (SELECT full_name, count(animals.owner_id) 
-FROM owners  JOIN animals  ON owners.id = animals.owner_id GROUP BY owners.full_name) 
-AS owners WHERE count = (SELECT MAX(count) FROM (SELECT full_name, count(animals.owner_id) 
-FROM owners JOIN animals  ON owners.id = animals.owner_id GROUP BY owners.full_name) AS owners);
+SELECT owners.full_name as owner, count as Max_numberOfAnimals FROM (
+    SELECT full_name, count(animals.owner_id) FROM owners
+    JOIN animals ON owners.id = animals.owner_id
+    GROUP BY owners.full_name
+) AS owners
+WHERE count = (
+    SELECT MAX(count) FROM (
+        SELECT full_name, count(animals.owner_id) FROM owners
+        JOIN animals ON owners.id = animals.owner_id
+        GROUP BY owners.full_name
+    ) AS owners
+);
