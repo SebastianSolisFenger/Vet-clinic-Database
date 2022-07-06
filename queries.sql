@@ -115,10 +115,6 @@ SELECT name AS AnimalsThatDidnotEscape FROM animals JOIN owners ON animals.owner
 
 -- Who owns the most animals?
 
-SELECT agg.full_name as owner, count as Total_number FROM (SELECT full_name, count(a.owner_id) FROM owners O JOIN animals A ON O.id = A.owner_id GROUP BY O.full_name) AS agg WHERE count = (SELECT MAX(count) FROM (SELECT full_name, count(a.owner_id) FROM owners O JOIN animals A ON O.id = A.owner_id GROUP BY O.full_name) AS agg);
-
--- Who owns the most animals?
-
 SELECT owners.full_name as owner, count as Max_numberOfAnimals FROM (
     SELECT full_name, count(animals.owner_id) FROM owners
     JOIN animals ON owners.id = animals.owner_id
