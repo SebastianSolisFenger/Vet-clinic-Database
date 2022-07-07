@@ -206,6 +206,19 @@ JOIN vets
 ON vets.id = visits.vet_id
 WHERE vets.name = 'Maisy Smith';
 
+-- OR
+
+SELECT count(*)
+FROM visits
+JOIN vets ON vets.id = visits.vet_id
+JOIN animals ON animals.id = visits.animal_id
+WHERE animals.species_id NOT IN (
+SELECT coalesce(specializations.species_id,3)
+    FROM vets
+    LEFT JOIN specializations ON specializations.vet_id = vets.id
+    WHERE vets.id = visits.vet_id
+)
+
 -- What specialty should Maisy Smith consider getting? Look for the species she gets the most.
 
 SELECT species.name AS specialty_MAISY_should_get, COUNT(visits.animal_id) as Total_amount
