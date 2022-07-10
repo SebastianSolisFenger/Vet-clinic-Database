@@ -40,3 +40,15 @@ PRIMARY KEY (id), FOREIGN KEY (animal_id) REFERENCES animals (id), FOREIGN KEY (
 -- Add an email column to your owners table
 ALTER TABLE owners ADD COLUMN email VARCHAR(120);
 
+--  OPTIMIZATION OF EXECUTION TIME.
+
+-- create an Index on the visits table for the animal_id column
+CREATE INDEX IF NOT EXISTS idx_animal_id ON visits USING btree (animal_id ASC NULLS LAST) TABLESPACE pg_default;
+
+-- create an Index on the visits table for the vet_id column
+CREATE INDEX idx_vet_id ON visits (vet_id ASC NULLS LAST);
+
+-- create an Index on the owners table for the email column
+CREATE INDEX idx_email ON owners (email ASC NULLS LAST); 
+
+
