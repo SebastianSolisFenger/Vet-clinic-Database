@@ -3,6 +3,9 @@
 ## About
 In this project is used a relational database to create the data structure for a vet clinic. A multiple SQL queries where answered based on this database and was analyzed on its performance as well.
 
+![Vet-clinic-Diagram-Official](https://user-images.githubusercontent.com/88522494/178377932-3b562b28-b4d5-4b00-8586-4f5a5829f6c5.png)
+
+
 ## Getting Started
 
 This repository includes files with plain SQL that can be used to recreate a database:
